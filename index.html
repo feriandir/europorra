@@ -20,7 +20,8 @@
     text-align: left;
   }
     td {
-    border: 2px solid transparent;
+	    border: 2px solid transparent;
+
     padding: 8px;
     text-align: left;
   }
@@ -76,14 +77,15 @@
 <table id="myTable">
   <thead>
     <tr>
-      <th>PAS</th>
-      <th>PUNTOS</th>
       <th>PAIS</th>
-      <th>PUNTOS</th>
-	  <th>PAIS</th>
-      <th>PUNTOS</th>
+      <th>SERGIO</th>
+	  <th> JESUS</th>
       <th>PAIS</th>
-      <th>PUNTOS</th>
+      <th> SERGIO</th>
+	  <th> JESUS</th>
+      <th>PAIS</th>
+      <th> SERGIO</th>
+	  <th> JESUS</th>
     </tr>
   </thead>
   <tbody>
@@ -98,6 +100,8 @@
 	
     var dropdownHTML = "<div class='estilado'><select>";
     var imgHTML = "<div class='filedrag'><img id='images'";
+	var ranking = "<div class='ranking'><p id='images"+ modo.length  +"'>XX</p></div>";
+
 	var selects=0
 
 	
@@ -122,7 +126,7 @@
 		  imgHTML += " src=./resources/banderas/" + modo[0] +".png style='width:80px;margin-top:1px;'>" ;
 		//});
 		
-		imgHTML += "<p>" + modo[0] +"</p></div>";
+		imgHTML += "<p style='font-size:12px'>" + modo[0] +"</p></div>"+ ranking ;
 		return imgHTML;	
 	
 	}
@@ -164,18 +168,25 @@
 	"NORWAY", 
 	"SANMARINO",	
 	"SWITZERLAND"];
+	var letoca=0
 	var dropdowns = 0
 	var elementos = banderas.length
     var tableBody = document.querySelector("#myTable tbody");
-    for (var i = 0; i < (elementos/2); i++) {
+    for (var i = 0; i < (elementos/3); i++) {
       var row = tableBody.insertRow();
-      for (var j = 0; j < 4; j++) {
+      for (var j = 0; j < 9; j++) {
         var cell = row.insertCell();
-		if (j%2 == 1){			
+		//AÑADIR SELECTS EN COLUMNAS PARES Y PARES +1
+		if (j == 1  || letoca>0){	
+		
 
-			if( dropdowns < elementos){
+			if( dropdowns < elementos*2){
 				cell.innerHTML = generateDropdown(1);
+				
+
 				dropdowns++
+				letoca--
+
 			}
 			
 		}else{
@@ -183,7 +194,10 @@
 			if(banderas.length>=1){
 		
 				cell.innerHTML = generateDropdown(banderas);
-				banderas.splice(0,1)
+				if(letoca==0){
+					banderas.splice(0,1)
+				}
+				letoca=2
 			}
 		}
       }
